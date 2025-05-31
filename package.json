@@ -1,0 +1,26 @@
+{
+  "name": "kmslhplaywrightproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "test:headed": "npx playwright test --headed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stefana1992/kmslh-playwright-project.git"
+  },
+  "keywords": [],
+  "author": "Stefana Tomic",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/stefana1992/kmslh-playwright-project/issues"
+  },
+  "homepage": "https://github.com/stefana1992/kmslh-playwright-project#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.52.0",
+    "@types/node": "^22.15.29"
+  }
+}
