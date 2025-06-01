@@ -48,7 +48,9 @@ Filters can be reset to "all" to show all jobs
 # Test Case 2: Verify filtering, pagination, and resource navigation for Videos and Webinars categories
 
 **Test ID** : TC_Resources_Filtering_002
+
 **Title** : Verify user can filter by category (Videos & Webinars), navigate paginated resources, and open a resource detail page
+
 **Precondition** :
 - User is on the homepage [https://kmslh.com/](https://kmslh.com/)
 
