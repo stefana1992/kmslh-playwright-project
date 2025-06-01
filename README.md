@@ -76,7 +76,7 @@ Filters can be reset to "all" to show all jobs
 
 
 
-## Installation
+# To Get Started with this project - Setup and Installation
 
 
 #### Pre-requisites
@@ -89,52 +89,8 @@ https://nodejs.org/en/download/
 
 3.Text Editor(Optional) installed-->Sublime/Visual Studio Code.
 
-## Run Scripts
-* Clone the repository into a folder
-* Go inside the folder and run following command from terminal/command prompt which would then install all the dependencies from package.json
 
-```
-npm install
-```
-
-# Run test with following command
-* Run all the tests
-
-```
-npx playwright test
-```
-
-* Run a single test file
-```
-npx playwright test tests/bookDemo.spec.ts
-```
-
-* Run tests in headed browsers
-```
-npx playwright test --headed
-```
-
-* Run your tests with UI Mode for a better developer experience with time travel debugging, watch mode and more.
-```
-npx playwright test --ui
-```
-
-## Allure reporter
-
-```
-# Install
-npm i -D allure-playwright
-
-# Run tests
-npx playwright test --reporter=line,allure-playwright
-
-# Generate report
-allure generate ./allure-results --clean && allure open ./allure-report
-```
-
-
-# To Get Started with this project - Setup
-
+# Steps for setup this project locally:
 
 If you want to run test locally, please follow these steps:
 
@@ -142,24 +98,24 @@ If you want to run test locally, please follow these steps:
 
 2. Make sure you have node.js installed
 
-3. Run ```npm install``` to install node modules
+3. Install dependencies:
+  
+    Run ```npm install``` to install node modules
 
-4. Now you can run tests with ```npm run test``` - it will execute Playwright tests sequentially, generate an Allure report, and open it in your browser
+ 4. Install Allure reporter:
+ 
+    Run ```npm install -D allure-playwright```
 
-5. If you want to run it in headed mode, then run tests with ```npm run test:headed```
+5. Now you can run tests with ```npm run test``` - it will execute Playwright tests sequentially, generate an Allure report, and open it in your browser
 
-6. If you want to run single test file:
+6. If you want to run it in headed mode, then run tests with ```npm run test:headed```
+
+7. If you want to run a specific test file, use one of the following:
 
 - ```npm run test:bookADemo```
 
-or
-
 - ```npm run test:accessibility```
 
-or
-
 - ```npm run test:videos```
-
-or
 
 - ```npm run test:career```
