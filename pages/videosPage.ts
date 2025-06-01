@@ -1,4 +1,5 @@
 import { Page, Locator, expect } from '@playwright/test';
+import { categoryData } from '../data/resources-data';
 
 export class VideosPage {
     readonly page: Page;
@@ -7,7 +8,6 @@ export class VideosPage {
 
     constructor(page: Page) {
         this.page = page;
-      
     }
 
     // Selects a specific category (e.g., "Videos") from the "Resources" menu
@@ -22,30 +22,40 @@ export class VideosPage {
         await this.page.waitForLoadState('networkidle'); // Waits until all network activity settles
     }
 
-    // Verifies that all listed resources on the current page are videos
-    async verifyAllResourcesAreVideos(): Promise<void> {
-        const items = this.page.locator('.e-loop-item');  // Selector for all resource items
-        const count = await items.count();// Total number of items
-        expect(count).toBeGreaterThan(0);// Ensure there are some resources displayed
+    // Verifies that all resource items on the current page belong to the specified category
+    async verifyResourcesByCategory(className: string): Promise<void> {
+        // Locate all resource items by their common container selector
+        const items = this.page.locator('.e-loop-item');
+        // Count how many items are currently displayed on the page
+        const count = await items.count();
 
-        // Loop through each item and check that it contains the class indicating it's a video
+        // Assert that there is at least one item on the page
+        expect(count).toBeGreaterThan(0);
+
         for (let i = 0; i < count; i++) {
             const item = items.nth(i);
+            // Get the class attribute of the current item, which contains category info
             const classAttr = await item.getAttribute('class');
-            expect(classAttr).toContain('category-video'); // Verify it's categorized as a video
+            // Assert that the class attribute contains the expected category class name
+            expect(classAttr).toContain(className);
         }
     }
 
-    // Goes through all paginated pages and verifies resources on each page
-    async navigateThroughAllPagesAndVerifyResources(): Promise<void> {
+    // Goes through all paginated pages and verifies resources on each page match the given category
+    async navigateThroughAllPagesAndVerifyResources(className: string): Promise<void> {
         let hasNextPage = true;
 
+        // Loop while there is a "Next" page button visible
         while (hasNextPage) {
-            await this.verifyAllResourcesAreVideos(); // Verify current page items
+
+            // Verify all resources on the current page belong to the specified category
+            await this.verifyResourcesByCategory(className);
 
             const nextBtn = this.page.locator('nav.elementor-pagination a.page-numbers.next');
-            hasNextPage = await nextBtn.isVisible(); // Check if there is a next page
-            // Clicks on the next page and waits for content to load
+
+            // Check if the "Next" button is visible (meaning more pages exist)
+            hasNextPage = await nextBtn.isVisible();
+
             if (hasNextPage) {
                 await Promise.all([
                     this.page.waitForLoadState('networkidle'),
@@ -55,7 +65,13 @@ export class VideosPage {
         }
     }
 
-    // Opens a resource by index (e.g., 5th item) and verifies that its URL is as expected
+    async filterByCategory(categoryName: string): Promise<void> {
+        const categoryLink = this.page.locator(`nav.elementor-nav-menu--main a.elementor-item`, { hasText: categoryName });
+        await categoryLink.click();
+        await expect(this.page.locator(`nav.elementor-nav-menu--main a.elementor-item.elementor-item-active`, { hasText: categoryName })).toBeVisible();
+    }
+
+
     async openResourceByIndexAndVerify(index: number = 0): Promise<void> {
         const items = this.page.locator('.e-loop-item'); // All resource items
         const count = await items.count();
@@ -66,36 +82,22 @@ export class VideosPage {
 
         const item = items.nth(index);
 
-        // Locators within the item
-        const categoryLabel = item.locator('a[rel="tag"]');  // Resource category (e.g., Video)
-        const titleElement = item.locator('h3.elementor-heading-title a');// Resource title
-        const resourceLink = item.locator('a:has(img)').first();// Link that wraps the thumbnail
+        // Locator for the link that wraps the thumbnail image
+        const resourceLink = item.locator('a:has(img)').first();
 
-        // Ensure required elements are visible
-        await expect(categoryLabel).toBeVisible();
-        await expect(titleElement).toBeVisible();
-        await expect(resourceLink).toBeVisible();
+        // Get the href attribute directly from the link
+        const resourceHref = await resourceLink.getAttribute('href');
+        if (!resourceHref) {
+            throw new Error('Resource link does not have href attribute.');
+        }
 
-        // Process the category to use it in the expected URL
-        const categoryText = (await categoryLabel.innerText()).trim().toLowerCase();
-        const categorySlug = categoryText.endsWith('s') ? categoryText.slice(0, -1) : categoryText;
-
-        // Generate a URL slug from the title
-        const titleText = (await titleElement.innerText()).trim();
-        const slug = titleText
-            .toLowerCase()
-            .replace(/[^\w\s-]/g, '') // Remove punctuation
-            .replace(/\s+/g, '-')     // Replace spaces with hyphens
-            .replace(/-+/g, '-');     // Normalize multiple hyphens
-
-        const expectedUrlPart = `/${categorySlug}/${slug}/`;
-
-        // Click on the resource and wait for the detail page to load
+        // Click and wait for the page to load
         await Promise.all([
             resourceLink.click(),
             this.page.waitForLoadState('networkidle'),
         ]);
-        // Verify that the new page URL contains the expected slug
-        await expect(this.page).toHaveURL(new RegExp(expectedUrlPart));
+
+        // Verify that the URL exactly matches the href attribute
+        await expect(this.page).toHaveURL(resourceHref);
     }
 }

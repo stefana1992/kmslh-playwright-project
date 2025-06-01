@@ -32,37 +32,45 @@ Automating these workflows helps ensure system reliability and stability, reduci
 8. Apply filters that result in no jobs shown  
 9. Verify no job postings are visible and a "No open positions found." message appears  
 
+
+**Expected Results**
+- Careers page loads correctly
+- Default filters are set to “All” and counter matches visible jobs
+- Selecting a department filters jobs and updates the counter
+- Selecting a location applies combined filtering and updates the counter
+- If no jobs match a "No open positions found." message appears
+
+
 **Postcondition**:  
-- Filters can be reset to "all" to show all jobs  
-- Proper message shows when no results are found
+Filters can be reset to "all" to show all jobs  
 
 
-# Test Case 2: Verify videos category resources listing and navigation
+# Test Case 2: Verify filtering, pagination, and resource navigation for Videos and Webinars categories
 
-**Test ID** : TC_VideoResources_002  
-**Title** : Verify user can view and navigate all video resources under the "Videos" category 
+**Test ID** : TC_Resources_Filtering_002
+**Title** : Verify user can filter by category (Videos & Webinars), navigate paginated resources, and open a resource detail page
 **Precondition** :
-- User is on the page [https://kmslh.com/] (https://kmslh.com/)
+- User is on the homepage [https://kmslh.com/](https://kmslh.com/)
 
 **Test Steps**
 1. Click on the **Resources** link in the header menu
 2. Select the category **Videos** from the submenu
-3. Verify the "Videos" section page loads correctly
-4. Navigate through all paginated pages, ensuring that resources continue to appear under the "Videos" category
-5. Open one resource on the page (e.g. 6th resource on the page)
-6. Verify:
-    - The resource has a visible category label and title
-    - Clicking on the resource leads to a detail page
-    - The URL of the detail page follows the expected pattern based on category and title
+3. Verify the resources listed on the page belong to the Videos category
+4. Navigate through all paginated pages and verify each resource item still belongs to the Videos category
+5. Apply the Webinars category filter
+6. Verify that only resources under the Webinars category are displayed
+7. Continue navigating through all paginated pages and confirm that all items remain within the Webinars category
+8. Open one resource (e.g. 6th on page) from the current list
+9. Verify the following on the detail page:
 
-**Expected Results** :  
-- All resources under the "Videos" category are labeled appropriately (`category-video`)
-- Resources persist across all pages with valid classification
-- Clicking on a resource leads to a page whose URL matches the category and slugified version of the title
+**Expected Results**:
+- Only items related to the selected category (Videos, then Webinars) are shown at every stage
+- Pagination retains category consistency
+- Resource detail page loads successfully with correct content and URL
 
-**Postcondition**:  
-- User lands on a valid video detail page  
-- No broken links or invalid categorization are encountered
+**Postconditions**:
+- User is on a valid detail page of a selected resource
+- No broken links, missing content, or incorrect categorization appears
 
 
 
