@@ -32,3 +32,31 @@ Automating these workflows helps ensure system reliability and stability, reduci
 **Postcondition**:  
 - Filters can be reset to "all" to show all jobs  
 - Proper message shows when no results are found
+
+
+# Test Case 2: Verify videos category resources listing and navigation
+
+**Test ID** : TC_VideoResources_002  
+**Title** : Verify user can view and navigate all video resources under the "Videos" category 
+**Precondition** :
+- User is on the page [https://kmslh.com/] (https://kmslh.com/)
+
+**Test Steps**
+1. Click on the **Resources** link in the header menu
+2. Select the category **Videos** from the submenu
+3. Verify the "Videos" section page loads correctly
+4. Navigate through all paginated pages, ensuring that resources continue to appear under the "Videos" category
+5. Open one resource on the page (e.g. 6th resource on the page)
+6. Verify:
+    - The resource has a visible category label and title
+    - Clicking on the resource leads to a detail page
+    - The URL of the detail page follows the expected pattern based on category and title
+
+**Expected Results** :  
+- All resources under the "Videos" category are labeled appropriately (`category-video`)
+- Resources persist across all pages with valid classification
+- Clicking on a resource leads to a page whose URL matches the category and slugified version of the title
+
+**Postcondition**:  
+- User lands on a valid video detail page  
+- No broken links or invalid categorization are encountered
