@@ -4,8 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "npx playwright test",
-    "test:headed": "npx playwright test --headed"
+    "test": "npx playwright test --workers=1 --reporter=list,allure-playwright && allure generate ./allure-results --clean && allure open ./allure-report",
+    "test:headed": "npx playwright test --headed --workers=1 --reporter=list,allure-playwright && allure generate ./allure-results --clean && allure open ./allure-report",
+    "test:bookADemo": "npx playwright test tests/bookDemo.spec.ts --reporter=list,allure-playwright && allure generate ./allure-results --clean && allure open ./allure-report",
+    "test:accessibility": "npx playwright test tests/accessibilityWidget.spec.ts --reporter=list,allure-playwright && allure generate ./allure-results --clean && allure open ./allure-report",
+    "test:videos": "npx playwright test tests/videos.spec.ts --reporter=list,allure-playwright && allure generate ./allure-results --clean && allure open ./allure-report",
+    "test:career": "npx playwright test tests/careerFilter.spec.ts --reporter=list,allure-playwright && allure generate ./allure-results --clean && allure open ./allure-report",
+    "test:allure-generate": "allure generate ./allure-results --clean",
+    "test:allure-run": "allure open ./allure-report"
   },
   "repository": {
     "type": "git",
@@ -21,6 +27,7 @@
   "homepage": "https://github.com/stefana1992/kmslh-playwright-project#readme",
   "devDependencies": {
     "@playwright/test": "^1.52.0",
-    "@types/node": "^22.15.29"
+    "@types/node": "^22.15.29",
+    "allure-playwright": "^3.2.2"
   }
 }

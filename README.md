@@ -1,3 +1,6 @@
+# KMS Lighthouse - Playwright Automation Project
+
+
 # Explained in a few sentences which part of the system I would automate and why:
 
 **I would automate the user interaction module, including navigation, dynamic UI components, and essential submission forms like "Book a Demo" and "Apply for this job."
@@ -60,3 +63,93 @@ Automating these workflows helps ensure system reliability and stability, reduci
 **Postcondition**:  
 - User lands on a valid video detail page  
 - No broken links or invalid categorization are encountered
+
+
+
+## Installation
+
+
+#### Pre-requisites
+1.NodeJS installed globally in the system.
+https://nodejs.org/en/download/
+
+**Note** Min node version 6.9.x
+
+2.Chrome or Firefox browsers installed.
+
+3.Text Editor(Optional) installed-->Sublime/Visual Studio Code.
+
+## Run Scripts
+* Clone the repository into a folder
+* Go inside the folder and run following command from terminal/command prompt which would then install all the dependencies from package.json
+
+```
+npm install
+```
+
+# Run test with following command
+* Run all the tests
+
+```
+npx playwright test
+```
+
+* Run a single test file
+```
+npx playwright test tests/bookDemo.spec.ts
+```
+
+* Run tests in headed browsers
+```
+npx playwright test --headed
+```
+
+* Run your tests with UI Mode for a better developer experience with time travel debugging, watch mode and more.
+```
+npx playwright test --ui
+```
+
+## Allure reporter
+
+```
+# Install
+npm i -D allure-playwright
+
+# Run tests
+npx playwright test --reporter=line,allure-playwright
+
+# Generate report
+allure generate ./allure-results --clean && allure open ./allure-report
+```
+
+
+# To Get Started with this project - Setup
+
+
+If you want to run test locally, please follow these steps:
+
+1. Clone this repository
+
+2. Make sure you have node.js installed
+
+3. Run ```npm install``` to install node modules
+
+4. Now you can run tests with ```npm run test``` - it will execute Playwright tests sequentially, generate an Allure report, and open it in your browser
+
+5. If you want to run it in headed mode, then run tests with ```npm run test:headed```
+
+6. If you want to run single test file:
+
+- ```npm run test:bookADemo```
+
+or
+
+- ```npm run test:accessibility```
+
+or
+
+- ```npm run test:videos```
+
+or
+
+- ```npm run test:career```
